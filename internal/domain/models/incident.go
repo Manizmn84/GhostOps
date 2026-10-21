@@ -14,3 +14,8 @@ type Incident struct {
 	StartTime time.Time      `json:"start_time"`
 	EndTime   time.Time      `json:"end_time"`
 }
+
+type IncidentMatch struct {
+	Type     string
+	Severity enums.Severity
+}
