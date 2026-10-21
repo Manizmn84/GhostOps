@@ -6,5 +6,16 @@ const (
 	Info  Severity = "INFO"
 	Warn  Severity = "WARN"
 	Error Severity = "ERROR"
-	FATAL Severity = "FATAL"
+	Fatal Severity = "FATAL"
 )
+
+func IsSeverity(input string) bool {
+	severity := Severity(input)
+
+	switch severity {
+	case Info, Warn, Error, Fatal:
+		return true
+	default:
+		return false
+	}
+}
