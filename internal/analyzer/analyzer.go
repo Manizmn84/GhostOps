@@ -1,6 +1,8 @@
 package analyzer
 
 import (
+	"sort"
+
 	"github.com/Manizmn84/GhostOps/internal/domain/models"
 	incidentrule "github.com/Manizmn84/GhostOps/internal/incidentRule"
 )
@@ -71,4 +73,23 @@ func (a *Analyzer) AddEntry(entry models.EntryLog) {
 	}
 }
 
-func (a *Analyzer) Report() models.Report
+func (a *Analyzer) Report() models.Report {
+	incidents := make([]models.Incident, 0, len(a.incidents))
+
+	for _, incident := range a.incidents {
+		incidents = append(incidents, *incident)
+	}
+
+	sort.Slice(incidents, func(i, j int) bool {
+		if incidents[i].Type != incidents[j].Type {
+			return incidents[i].Type < incidents[j].Type
+		}
+
+		return incidents[i].Service < incidents[j].Service
+	})
+
+	return models.Report{
+		Statistics: a.statistics,
+		Incidents:  incidents,
+	}
+}
