@@ -12,6 +12,10 @@ type PaymentFailureRule struct{}
 func (r PaymentFailureRule) Match(
 	entry models.EntryLog,
 ) (models.IncidentMatch, bool) {
+	if entry.SeverityLevel != enums.Error && entry.SeverityLevel != enums.Fatal {
+		return models.IncidentMatch{}, false
+	}
+
 	message := strings.ToLower(entry.Message)
 
 	matched := strings.Contains(message, "payment gateway") ||

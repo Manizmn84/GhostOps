@@ -13,7 +13,7 @@ import (
 func Reader(
 	reader io.Reader,
 	parser parserService.Parser,
-	analyzer analyzer.Analyzer,
+	analyzer *analyzer.Analyzer,
 ) error {
 	scanner := bufio.NewScanner(reader)
 
@@ -24,7 +24,7 @@ func Reader(
 
 		entry, err := parser.Parse(input)
 		if err != nil {
-			if errors.Is(err, parserService.MalformedLineErr) {
+			if errors.Is(err, parserService.ErrMalformedLine) {
 				analyzer.AddMalformed()
 				continue
 			}

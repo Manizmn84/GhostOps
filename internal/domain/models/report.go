@@ -1,6 +1,6 @@
 package models
 
 type Report struct {
-	Statistics Statistics
-	Incidents  []Incident
+	Statistics Statistics `json:"statistics"`
+	Incidents  []Incident `json:"incidents"`
 }
