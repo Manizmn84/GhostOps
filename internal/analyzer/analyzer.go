@@ -3,6 +3,7 @@ package analyzer
 import (
 	"sort"
 
+	"github.com/Manizmn84/GhostOps/internal/domain/enums"
 	"github.com/Manizmn84/GhostOps/internal/domain/models"
 	incidentrule "github.com/Manizmn84/GhostOps/internal/incidentRule"
 )
@@ -48,6 +49,9 @@ func (a *Analyzer) addIncident(
 	}
 
 	incident.Count++
+	if severityRank(match.Severity) > severityRank(incident.Severity) {
+		incident.Severity = match.Severity
+	}
 
 	if entry.Time.Before(incident.StartTime) {
 		incident.StartTime = entry.Time
@@ -55,6 +59,21 @@ func (a *Analyzer) addIncident(
 
 	if entry.Time.After(incident.EndTime) {
 		incident.EndTime = entry.Time
+	}
+}
+
+func severityRank(severity enums.Severity) int {
+	switch severity {
+	case enums.Fatal:
+		return 4
+	case enums.Error:
+		return 3
+	case enums.Warn:
+		return 2
+	case enums.Info:
+		return 1
+	default:
+		return 0
 	}
 }
 

@@ -27,6 +27,6 @@ func (r PaymentFailureRule) Match(
 
 	return models.IncidentMatch{
 		Type:     "PAYMENT_FAILURE",
-		Severity: enums.Error,
+		Severity: entry.SeverityLevel,
 	}, true
 }
