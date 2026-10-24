@@ -12,7 +12,7 @@ import (
 
 func Reader(
 	reader io.Reader,
-	parser parserService.Parser,
+	parser *parserService.Parser,
 	analyzer *analyzer.Analyzer,
 ) error {
 	scanner := bufio.NewScanner(reader)
